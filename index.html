@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Website</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+      animation: marquee 30s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .carousel img {
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    /* Hide horizontal scrollbar */
+    body {
+      overflow-x: hidden;
+    }
+    /* Adjust the height of the website name section */
+    .website-name {
+      height: 60px; /* Adjusted height for balance */
+    }
+    /* Fullscreen mode adjustments */
+    .fullscreen {
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
+
+    /* เพิ่ม min-height และ flex-grow ให้ Content Display Area */
+    #content-area {
+      min-height: 600px; /* ความสูงขั้นต่ำ */
+      flex-grow: 1.5; /* ขยายพื้นที่ตามขนาดที่เหลือ */
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+  <!-- Main Container -->
+  <div class="flex flex-col h-screen">
+    <!-- Top Section -->
+    <div class="flex flex-row items-center justify-between p-2 bg-green-300 website-name">
+      <!-- No.1: Logo -->
+      <div>
+        <img src="https://i.postimg.cc/qR7hnv9t/logo.png" alt="Logo" class="w-28 h-28 rounded-full border-4 border-white">
+      </div>
+
+      <!-- No.2: Website Name -->
+      <div class="text-2xl font-bold text-white">แผนกบริการและลูกค้าสัมพันธ์ (นครพนม)</div>
+      <!-- No.3: Real-time Clock -->
+      <div id="clock" class="text-m font-mono text-white"></div>
+    </div>
+
+    <!-- Marquee Section -->
+    <div class="p-1 bg-green-60">
+      <!-- No.12: Marquee -->
+      <div class="marquee text-black font-semibold" id="marquee">Demo ผบส.นครพนม. Update me with your latest announcements!</div>
+    </div>
+
+    <!-- Middle Section -->
+    <div class="flex flex-grow">
+      <!-- No.6: Menu Bar -->
+      <div class="w-1/6 bg-green-40 p-4 space-y-4 border-r border-green-900">
+        <button class="w-full flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300" onclick="loadContent('https://lookerstudio.google.com/embed/reporting/37f35bed-8ca3-44fd-9a88-4ef8d222d5db/page/p_n1rtfwprod')">
+          <span>🏠</span>
+          <span>Home</span>
+        </button>
+        <button class="w-full flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300" onclick="loadContent('https://lookerstudio.google.com/embed/reporting/37f35bed-8ca3-44fd-9a88-4ef8d222d5db/page/p_l9p9j946od')">
+          <span>📄</span>
+          <span>About</span>
+        </button>
+        <button class="w-full flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300" onclick="loadContent('https://test-alert2.vercel.app')">
+          <span>📧</span>
+          <span>Contact</span>
+        </button>
+
+        <!-- No.7: Additional Links -->
+        <div class="mt-8 space-y-4 border-t border-green-900 pt-4">
+          <a href="https://sabuyservice.pea.co.th/" class="flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300">
+            <span>🔗</span>
+            <span>Link 1</span>
+          </a>
+          <a href="https://www.pea.co.th/our-services/download/customer-guideline" class="flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300">
+            <span>🔗</span>
+            <span>Link 2</span>
+          </a>
+          <a href="https://peasolar.pea.co.th/package-lists" class="flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300">
+            <span>🔗</span>
+            <span>Link 3</span>
+          </a>
+          <a href="https://www.pea.co.th/our-services/tariff" class="flex items-center space-x-2 p-2 bg-green-400 rounded-lg hover:bg-green-300">
+            <span>🔗</span>
+            <span>Link 4</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Content and YouTube Section -->
+      <div class="flex flex-col flex-grow bg-gray-50 p-4">
+        <!-- No.4: YouTube Embed -->
+        <div class="w-full mb-4">
+          <iframe class="w-full h-96" src="https://www.youtube.com/embed/F5oluJAoXCI" frameborder="0" allowfullscreen></iframe>
+        </div>
+        
+        <!-- Fullscreen Button -->
+        <div class="mb-4">
+          <button id="fullscreen-btn" class="p-3 bg-green-500 text-white rounded-lg hover:bg-green-400" onclick="toggleFullscreen()">Fullscreen</button>
+        </div>
+
+        <!-- No.8: Content Display Area -->
+        <div id="content-area" class="flex-grow bg-white p-4 border rounded-lg">
+          <h2 class="text-xl font-semibold">Welcome!</h2>
+          <p>Select a menu item to load content here.</p>
+        </div>
+
+       
+      </div>
+
+      <!-- No.9: Carousel -->
+      <div class="w-1/6 bg-green-40 p-4">
+        <div class="carousel">
+          <img src="https://i.postimg.cc/xjKg3fX3/PEA-A5.jpg" class="w-full h-150 object-cover rounded-lg active">
+          <img src="https://i.postimg.cc/qBPPN0MJ/IMG-6993-jpeg.webp" class="w-full h-150 object-cover rounded-lg">
+          <img src="https://i.postimg.cc/59B3mMSN/jpg.webp" class="w-full h-100 object-cover rounded-lg">
+          <img src="https://i.postimg.cc/0QfzbZ7x/0-jpg.webp" class="w-full h-150 object-cover rounded-lg">
+          <img src="https://i.postimg.cc/T113hxRq/S-5087797-jpg.webp" class="w-full h-150 object-cover rounded-lg">
+<!-- หรือใช้ลิงค์เพื่อเปิดในแท็บใหม่ -->
+          <a href="https://sabuyservice.pea.co.th/" target="_blank" class="block p-2 bg-green-400 rounded-lg text-white text-center hover:bg-green-300">
+            📊 Click Here
+          </a>
+        
+        </div>
+<!-- กราฟแท่งเทียน (Set Index) -->
+        <div class="mt-4">
+          <!-- ฝังกราฟแท่งเทียน (Set Index) ภายใน iframe -->
+          <iframe src="https://www.pea.co.th/" class="w-full h-150" frameborder="0"></iframe>
+          <!-- หรือใช้ลิงค์เพื่อเปิดในแท็บใหม่ -->
+          <a href="https://www.pea.co.th/" target="_blank" class="block p-2 bg-green-400 rounded-lg text-white text-center hover:bg-green-300">
+            📊 PEA.CO.TH
+          </a>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Footer Section -->
+    <div class="p-1 bg-green-100 flex justify-between">
+      <!-- Visitor Counter -->
+      <div id="visitor-counter" class="text-sm text-gray-700">Visitors: 0</div>
+      <!-- Developer Info -->
+      <div class="text-sm text-gray-700">Developed by: PEA NPN CS</div>
+    </div>
+  </div>
+
+  <script>
+    // Real-time Clock
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const formattedTime = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+      document.getElementById('clock').textContent = formattedTime;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Content Loader
+    function loadContent(page) {
+      document.getElementById('content-area').innerHTML = `<iframe src="${page}" class="w-full h-full border-none"></iframe>`;
+    }
+
+    // Fullscreen Function
+    function toggleFullscreen() {
+      const contentArea = document.getElementById('content-area');
+      contentArea.classList.toggle('fullscreen');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        contentArea.requestFullscreen();
+      }
+    }
+
+    // Carousel Functionality
+    let carouselIndex = 0;
+    function showNextImage() {
+      const images = document.querySelectorAll('.carousel img');
+      images[carouselIndex].classList.remove('active');
+      carouselIndex = (carouselIndex + 1) % images.length;
+      images[carouselIndex].classList.add('active');
+    }
+    setInterval(showNextImage, 3000);
+
+    // Visitor Counter
+    let visitorCount = localStorage.getItem('visitorCount') || 0;
+    visitorCount++;
+    localStorage.setItem('visitorCount', visitorCount);
+    document.getElementById('visitor-counter').textContent = `Visitors: ${visitorCount}`;
+  </script>
+</body>
+</html>
